@@ -1,0 +1,174 @@
+*,:before,:after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    font-family: monospace;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.1);
+    background-color: tomato;
+
+    #listaUsuarios{
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        list-style: none;
+        
+        li a{
+            font-size: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        li a:hover{
+            color: black;
+        }
+    }
+
+    .cabeceraUsuario{
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        align-items: center;
+
+        input{
+            height: 30px;
+            padding: 7px;
+        }
+    }
+}
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+    gap: 20px;
+}
+
+.contenedorTablaUsuarios{
+    width: 70%;
+    min-width: 500px;
+
+    #tablaUsuarios {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    #tablaUsuarios td, #tablaUsuarios th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #tablaUsuarios tr:nth-child(even){
+        background-color: #f2f2f2;
+    }
+
+    #tablaUsuarios tr:hover {
+        background-color: #ddd;
+    }
+
+    #tablaUsuarios th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: firebrick;
+        color: white;
+    }
+
+    .botonesAdministracion{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+
+        button{
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 15px;
+            border: none;
+            background-color: gold;
+            font-weight: bolder;
+            color: black;
+        }
+        /*
+        .btnEditar{
+            background-color: gold;
+        }
+
+        .btnActivarUsuario{
+            background-color: lightskyblue;
+        }
+        */
+        .btnEliminar{
+            background-color: tomato;
+        }
+    }
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContenido{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .tituloEditarUsuario{
+        display: flex;
+        justify-content: space-between;
+
+        span{
+            cursor: pointer;
+        }
+    }
+
+    .formularioEditarUsuario{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        font-size: 16px;
+        
+        input{
+            padding: 5px;
+        }
+        .btnGuardarUsuario{
+            border: none;
+            background-color: tomato;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    }
+}
+

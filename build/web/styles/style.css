@@ -1,0 +1,319 @@
+*,:before,:after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.1);
+    background-color: tomato;
+
+    .cabeceraUsuario{
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        align-items: center;
+
+        input{
+            height: 30px;
+            padding: 7px;
+        }
+    }
+}
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 800px;
+    margin: 30px;
+
+    .container-crearExperiencia {
+        height:fit-content;
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+        form{
+            display: flex;
+            flex-direction: column;
+            gap:10px;
+            section{
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                gap: 10px;
+                input{
+                    flex:1;
+                    padding: 5px;
+                    font-size: 14px;
+                }
+            }
+            textarea{
+                resize: none;
+                padding: 5px;
+                font-size: 14px;
+            }
+
+            button{
+                padding: 10px;
+                border-radius: 10px;
+                border: none;
+                cursor: pointer;
+                background: tomato;
+                font-weight: bold;
+            }
+
+            button:active{
+                background: salmon;
+            }
+        }
+    }
+    #listaExperiencias{
+        border: 1px solid black;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+        section{
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+
+
+}
+.error{
+    color:red
+}
+
+.experiencia{
+    border:1px black solid;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.experiencia:hover{
+    background: whitesmoke;
+}
+
+
+#containerSinResultados{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+}
+
+.tituloExperiencia{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.experienciaDesglosada{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+
+    .experienciaDesglosada-tituloExperiencia{
+        border-bottom: 1px solid crimson;
+        padding-bottom: 30px;
+    }
+
+    .experienciaDesglosada-Contenido{
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+        .experienciaDesglosada-Contenido-Titulo{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .experienciaDesglosada-Contenido-ListaActividades{
+            list-style: none;
+        }
+    }
+    
+    .experienciaDesglosada-ContainerOpinar{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        textarea{
+            position: relative;
+            width: 100%;
+            height: 100px;
+            border: none;
+            resize: none;
+            font-size: 16px;
+        }
+        
+        textarea:focus{
+            outline: none;
+            border:none;
+        }
+        
+        button{
+            position: absolute;
+            font-weight: bold;
+            width: fit-content;
+            padding: 10px 20px;
+            background-color: tomato;
+            border: none;
+            border-radius: 5px;
+            right: 0;
+            bottom: 0;
+            cursor: pointer;
+        }
+    }
+    
+    .experienciaDesglosada-Opiniones{
+        display: flex;
+        flex-direction: column;
+
+        .opinion{
+            border-top: 1px solid gainsboro;
+            padding: 10px;
+        }
+    }
+}
+
+
+
+/*Dropdown para editar experiencia*/
+.dropbtn {
+    color: tomato;
+    border: none;
+    background: white;
+    cursor: pointer;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+}
+
+.dropbtn:hover, .dropbtn:active {
+    background-color: tomato;
+    color: white;
+    box-shadow: 0px 0px 3px 3px rgba(0,0,0,0.05);
+}
+
+.dropbtn:active{
+    background-color: orangered;
+}
+
+.dropdown {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 180px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.08);
+    z-index: 1;
+    border: 1px solid tomato;
+    right: 0;
+    border-radius: 10px;
+    background: white;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: tomato;
+}
+
+.mostrar {
+    display: block;
+}
+
+.publicoPrivado{
+    margin-left: 3px;
+    font-style: italic;
+    color: grey;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.listaActividades{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    .actividad{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+        width: fit-content;
+    }
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContenido{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .tituloEditarActividad{
+        display: flex;
+        justify-content: space-between;
+
+        span{
+            cursor: pointer;
+        }
+    }
+
+    .formularioEditarActividad{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        textarea{
+            width: 100%;
+            height: 100px;
+        }
+    }
+}
+
+
