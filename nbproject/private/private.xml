@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/admin/panelAdministracion.jsp</file>
+            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/src/java/controlador/admin/ControladorEditarUsuario.java</file>
+            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/src/java/controlador/usuario/ControladorCrearActividad.java</file>
             <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/src/java/controlador/usuario/ControladorEditarExperiencia.java</file>
-            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/styles/style.css</file>
-            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/usuario/experiencia.jsp</file>
-            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/usuario/inicio.jsp</file>
+            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/src/java/controlador/admin/ControladorActivarUsuario.java</file>
+            <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/styles/styleAdmin.css</file>
             <file>file:/C:/Users/Carlos/OneDrive/Escritorio/DESARROLLO%20DE%20APLICACIONES%20WEB/SegundoCurso/DesarrolloEntornoServidor/Practica2/web/usuario/editarExperiencia.jsp</file>
         </group>
     </open-files>

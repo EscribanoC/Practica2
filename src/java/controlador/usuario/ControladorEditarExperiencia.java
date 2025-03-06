@@ -86,7 +86,6 @@ public class ControladorEditarExperiencia extends HttpServlet {
             throws ServletException, IOException {
         //Recoge la id de la experiencia actual y el tipo de submit
         String idExperiencia = request.getParameter("idExperiencia");
-        String tipoSubmit = request.getParameter("tipoSubmit");
         String error = "";
 
         //Creación de servicios
@@ -101,87 +100,48 @@ public class ControladorEditarExperiencia extends HttpServlet {
         request.setAttribute("experiencia", experienciaOriginal);
         //Para recuperar la fecha de inico de la experiencia en la vista, se tiene que parsear al formato 'yyyy-MM-dd
         request.setAttribute("experienciaFecha", formato.format(experienciaOriginal.getFechaInicio()));
-        
+
         //System.out.println("Tipo submit" + tipoSubmit);
-        
-        if (tipoSubmit.equals("Añadir Actividad")) {//Si se añade una actividad
-            //Recoge los parámetros de la actividad a añadir
-            String tituloActividad = request.getParameter("tituloActividad");
-            String fechaActividad = request.getParameter("fechaActividad");
-            String descripcionActividad = request.getParameter("descripcionActividad");
+        //System.out.println("Entra En guardar experiencia");
+        //Recoge los parámetros de la experiencia
+        String tituloExperiencia = request.getParameter("tituloExperiencia");
+        String fechaExperiencia = request.getParameter("fechaExperiencia");
+        String descripcionExperiencia = request.getParameter("descripcionExperiencia");
 
-            if (tituloActividad == null || tituloActividad.isEmpty()
-                    || fechaActividad == null || fechaActividad.isEmpty()
-                    || descripcionActividad == null || descripcionActividad.isEmpty()) {//Si los campos de la actividad están vacíos
-                error = "Los campos de la actividad no pueden estar vacíos";
-                request.setAttribute("error", error);
-                getServletContext().getRequestDispatcher("/usuario/editarExperiencia.jsp").forward(request, response);
-                return;
-            }
-            
-            //TODO Añadir imágenes
-            try {
-                //Crea la actividad
-                Actividad a = new Actividad();
-                a.setTitulo(tituloActividad);
-                a.setDescripcion(descripcionActividad);
-                a.setExperiencia(experienciaOriginal);
-
-                // Convertir el String a Date
-                Date fechaNueva = formato.parse(fechaActividad);
-                a.setFecha(fechaNueva);
-
-                sa.create(a);
-                emf.close();
-            } catch (Exception e) {
-                error = "Error: " + e.getMessage();
-                emf.close();
-            }
+        if (tituloExperiencia == null || tituloExperiencia.isEmpty()
+                || fechaExperiencia == null || fechaExperiencia.isEmpty()
+                || descripcionExperiencia == null || descripcionExperiencia.isEmpty()) {//Si los campos de la experiencia están vacíos
+            error = "Los campos de la experiencia no pueden estar vacíos";
+            request.setAttribute("error", error);
+            getServletContext().getRequestDispatcher("/usuario/editarExperiencia.jsp").forward(request, response);
+            return;
         }
 
-        if (tipoSubmit.equals("Guardar Experiencia")) {//Si se quiere editar la experiencia
-            //System.out.println("Entra En guardar experiencia");
-            //Recoge los parámetros de la experiencia
-            String tituloExperiencia = request.getParameter("tituloExperiencia");
-            String fechaExperiencia = request.getParameter("fechaExperiencia");
-            String descripcionExperiencia = request.getParameter("descripcionExperiencia");
+        try {
+            //Crea la experiencia
+            ExperienciaViaje experienciaCambiada = new ExperienciaViaje();
+            experienciaCambiada.setId(experienciaOriginal.getId());
+            experienciaCambiada.setTitulo(tituloExperiencia);
+            experienciaCambiada.setDescripcion(descripcionExperiencia);
+            experienciaCambiada.setUsuario(experienciaOriginal.getUsuario());
+            experienciaCambiada.setActividades(experienciaOriginal.getActividades());
+            experienciaCambiada.setOpiniones(experienciaOriginal.getOpiniones());
 
-            if (tituloExperiencia == null || tituloExperiencia.isEmpty()
-                    || fechaExperiencia == null || fechaExperiencia.isEmpty()
-                    || descripcionExperiencia == null || descripcionExperiencia.isEmpty()) {//Si los campos de la experiencia están vacíos
-                error = "Los campos de la experiencia no pueden estar vacíos";
-                request.setAttribute("error", error);
-                getServletContext().getRequestDispatcher("/usuario/editarExperiencia.jsp").forward(request, response);
-                return;
-            }
+            // Convertir el String a Date
+            Date fechaInicioNueva = formato.parse(fechaExperiencia);
+            experienciaCambiada.setFechaInicio(fechaInicioNueva);
 
-            try {
-                //Crea la experiencia
-                ExperienciaViaje experienciaCambiada = new ExperienciaViaje();
-                experienciaCambiada.setId(experienciaOriginal.getId());
-                experienciaCambiada.setTitulo(tituloExperiencia);
-                experienciaCambiada.setDescripcion(descripcionExperiencia);
-                experienciaCambiada.setUsuario(experienciaOriginal.getUsuario());
-                experienciaCambiada.setActividades(experienciaOriginal.getActividades());
-                experienciaCambiada.setOpiniones(experienciaOriginal.getOpiniones());
+            //Se edita en la base de datos
+            sev.edit(experienciaCambiada);
 
-                // Convertir el String a Date
-                Date fechaInicioNueva = formato.parse(fechaExperiencia);
-                experienciaCambiada.setFechaInicio(fechaInicioNueva);
-
-                //Se edita en la base de datos
-                sev.edit(experienciaCambiada);
-
-                emf.close();
-                response.sendRedirect("Experiencia?idExperiencia=" + idExperiencia);
-                return;
-            } catch (Exception e) {
-                error = "Error: " + e.getMessage();
-                emf.close();
-            }
+            emf.close();
+            response.sendRedirect("Experiencia?idExperiencia=" + idExperiencia);
+            return;
+        } catch (Exception e) {
+            error = "Error: " + e.getMessage();
+            emf.close();
         }
 
-        
         request.setAttribute("error", error);
         // Redirige para evitar duplicados
         response.sendRedirect(request.getContextPath() + "/usuario/EditarExperiencia?idExperiencia=" + idExperiencia);

@@ -94,9 +94,12 @@ main{
     .botonesAdministracion{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: center;
+        gap: 10px;
 
-        button{
+        button, a {
+            text-decoration: none;
+            font-family: monospace;
             cursor: pointer;
             border-radius: 5px;
             padding: 5px 10px;
@@ -106,15 +109,6 @@ main{
             font-weight: bolder;
             color: black;
         }
-        /*
-        .btnEditar{
-            background-color: gold;
-        }
-
-        .btnActivarUsuario{
-            background-color: lightskyblue;
-        }
-        */
         .btnEliminar{
             background-color: tomato;
         }
@@ -137,7 +131,7 @@ main{
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 600px;
+    width: 400px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;

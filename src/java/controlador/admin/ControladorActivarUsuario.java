@@ -4,12 +4,17 @@
 package controlador.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.entidades.Usuario;
+import modelo.servicio.ServicioUsuario;
 
 /**
  *
@@ -29,7 +34,26 @@ public class ControladorActivarUsuario extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String idUsuario = request.getParameter("idUsuario");
+
+        if (idUsuario == null || idUsuario.isEmpty()) {
+            response.sendRedirect("panelAdministracion");
+            return;
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
+        ServicioUsuario su = new ServicioUsuario(emf);
+
+        try {
+            Usuario u = su.findUsuario(Long.valueOf(idUsuario));
+            u.setActivo(!u.isActivo());
+            su.edit(u);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        emf.close();
+
+        response.sendRedirect("PanelAdministracion");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

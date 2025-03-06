@@ -55,7 +55,9 @@
                                 <td class="campoActivo">${usuario.activo?"Si":"No"}</td>
                                 <td class="botonesAdministracion">
                                     <button onclick="editarUsuario(${usuario.id})" class="btnEditar">Editar</button>
-                                    <button class="btnActivarUsuario">${usuario.activo?"Desactivar":"Activar"}</button>
+                                    <a class="btnActivarUsuario" onclick="activarUsuario('${usuario.email}', '${usuario.id}', ${usuario.activo})">
+                                        ${usuario.activo?"Desactivar":"Activar"}
+                                    </a>
                                     <button class="btnEliminar">Eliminar Usuario</button>
                                 </td>
                             </tr>
@@ -91,13 +93,22 @@
         </main>
         <script>
             /* Comprueba cuando carga el DOm si el campo donde indica si el usuario
-              está activo o no, y le asigna un color correspondiente a cada uno.*/
+             está activo o no, y le asigna un color correspondiente a cada uno.*/
             document.addEventListener("DOMContentLoaded", () => {
                 let camposActivo = document.querySelectorAll(".campoActivo");
                 camposActivo.forEach((campo) => {
                     campo.style.backgroundColor = campo.textContent === "Si" ? "LightGreen" : "LightCoral";
                 });
             });
+        </script>
+        <script>
+            function activarUsuario(usuarioEmail, id, activo) {
+                let isActivo = activo?"desactivar":"activar";
+                if (confirm("Va a " + isActivo + " al usuario " + usuarioEmail + ". ¿Está seguro?" )) {
+                    window.location.href = "ControladorActivarUsuario?idUsuario=" + id;
+                }
+            }
+
         </script>
         <script src="./js/editarUsuarioAdmin.js"></script>
     </body>
