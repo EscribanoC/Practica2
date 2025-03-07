@@ -48,6 +48,11 @@ public class ControladorActivarUsuario extends HttpServlet {
             Usuario u = su.findUsuario(Long.valueOf(idUsuario));
             u.setActivo(!u.isActivo());
             su.edit(u);
+            
+            if (u.isActivo()) {//Si se ha activado 
+                response.sendRedirect("ControladorEnviarEmail?to=" + u.getEmail());
+                return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
