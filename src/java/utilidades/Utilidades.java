@@ -14,12 +14,11 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author jose
+ * @author Carlos
  */
 public class Utilidades {
 
     public void enviarEmail(Email email, String password) throws MessagingException {
-        System.out.println("entro");
         Properties p = new Properties();
         // Servidor smtp de correo
         p.setProperty("mail.smtp.host", "smtp.gmail.com");

@@ -38,12 +38,12 @@ public class ControladorEnviarEmail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String to = request.getParameter("to");
-        String from = "escribano.flores.carlos@iescamas.com";
+        String from = "escribano.flores.carlos@iescamas.es";
         String password = "practica2";
         String subject = "Activación de cuenta";
         String text = "Buenas, le informamos que su cuenta de myExperience con email " + to + " ha sido activada."
-                + "\n Ya puede acceder a la apliación cuando lo desee. "
-                + "\n Muchas gracias y un saludo.";
+                + "\nYa puede acceder a la apliación cuando lo desee. "
+                + "\nMuchas gracias y un saludo.";
         
         if (to != null) {
             Email email = new Email();
@@ -54,51 +54,13 @@ public class ControladorEnviarEmail extends HttpServlet {
             Utilidades u = new Utilidades();
             
             try {
-                enviarEmail(email, password);
+                u.enviarEmail(email, password);
             } catch (Throwable e) {
                 System.err.println(e.getMessage());
             }
         }
         response.sendRedirect("PanelAdministracion");
 
-    }
-
-    public void enviarEmail(Email email, String password) throws MessagingException {
-        
-        Properties p = new Properties();
-        // Servidor smtp de correo
-        p.setProperty("mail.smtp.host", "smtp.gmail.com");
-        // Usar TLS
-        p.setProperty("mail.smtp.starttls.enable", "true");
-        // puerto del servidor smtp
-        p.setProperty("mail.smtp.port", "587");
-        // Usuario smtp
-        p.setProperty("mail.smtp.user", email.getFrom());
-        // Autenticación requerida
-        p.setProperty("mail.smtp.auth", "true");
-        // Obtenemos la sesión
-        Session sesion = Session.getDefaultInstance(p);
-        sesion.setDebug(false);
-        // Creamos el mensaje
-        MimeMessage mensaje = new MimeMessage(sesion);
-        // Y establecemos sus propiedades
-        
-        //try {
-            
-            mensaje.setFrom(new InternetAddress(email.getFrom()));
-            mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
-            mensaje.setSubject(email.getSubject());
-            mensaje.setText(email.getText());
-            // Enviamos el mensaje
-            Transport t = sesion.getTransport("smtp");
-            // Para conectarnos usamos usuario y password
-            t.connect(email.getFrom(), password);
-            t.sendMessage(mensaje, mensaje.getAllRecipients());
-        //} catch (MessagingException e) {
-        //    System.err.println(e.getMessage());
-        //} catch (Exception ex){
-        //    System.out.println("ERROR: " + ex.getMessage());
-        //}
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

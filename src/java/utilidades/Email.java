@@ -6,7 +6,7 @@ package utilidades;
 
 /**
  *
- * @author jose
+ * @author Carlos
  */
 public class Email {
     private String from = "";
