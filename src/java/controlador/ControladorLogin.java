@@ -70,7 +70,7 @@ public class ControladorLogin extends HttpServlet {
                 sesion.setAttribute("usuario", u);
                 response.sendRedirect("admin/PanelAdministracion");
                 return;
-            } else if(!u.isActivo()){//Si no está activo
+            } else if(u != null && !u.isActivo()){//Si no está activo
                 error = "La cuenta no está activa, tiene que esperar a que un admin se la active.";
             }else{//Si las credenciales son incorrectas
                 error = "e-mail o contraseña incorrecta";
