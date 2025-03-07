@@ -3,9 +3,13 @@
  */
 package controlador.usuario;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import modelo.entidades.Actividad;
 import modelo.entidades.ExperienciaViaje;
 import modelo.entidades.Usuario;
@@ -88,7 +93,6 @@ public class ControladorEditarExperiencia extends HttpServlet {
         String idExperiencia = request.getParameter("idExperiencia");
         String tipoSubmit = request.getParameter("tipoSubmit");
         String error = "";
-
         //Creación de servicios
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
@@ -102,7 +106,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
         //Para recuperar la fecha de inico de la experiencia en la vista, se tiene que parsear al formato 'yyyy-MM-dd
         request.setAttribute("experienciaFecha", formato.format(experienciaOriginal.getFechaInicio()));
 
-        //System.out.println("Tipo submit" + tipoSubmit);
+        System.out.println("Tipo submit" + tipoSubmit);
         if (tipoSubmit.equals("Añadir Actividad")) {//Si se añade una actividad
             //Recoge los parámetros de la actividad a añadir
             String tituloActividad = request.getParameter("tituloActividad");
@@ -118,18 +122,34 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 return;
             }
 
-            //TODO Añadir imágenes
+            //Guardar la imagen en la carpeta /usuario/media
+            String path = getServletContext().getRealPath("usuario/media");
+            //System.out.println(" **** Path: " + path);
+            Part fichero = request.getPart("imagen");
+            String nombreImagen = path + "/" + fichero.getSubmittedFileName();
+            InputStream contenido = fichero.getInputStream();
+            FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
+            byte[] buffer = new byte[8192];
+            while (contenido.available() > 0) {
+                int bytesLeidos = contenido.read(buffer);
+                ficheroSalida.write(buffer, 0, bytesLeidos);
+            }
+            ficheroSalida.close();
+            contenido.close();
+
             try {
                 //Crea la actividad
                 Actividad a = new Actividad();
                 a.setTitulo(tituloActividad);
                 a.setDescripcion(descripcionActividad);
                 a.setExperiencia(experienciaOriginal);
-
+                a.setImagenes(fichero.getSubmittedFileName());
                 // Convertir el String a Date
                 Date fechaNueva = formato.parse(fechaActividad);
                 a.setFecha(fechaNueva);
-
+                
+                
+                
                 sa.create(a);
                 emf.close();
             } catch (Exception e) {
@@ -177,7 +197,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
             } catch (Exception e) {
                 error = "Error: " + e.getMessage();
                 emf.close();
-            } 
+            }
         }
 
         request.setAttribute("error", error);

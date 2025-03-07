@@ -35,13 +35,13 @@ public class Actividad implements Serializable, Comparable<Actividad> {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    private List<String> imagenes;
+    private String imagenes;
     @ManyToOne
     @JoinColumn(name = "experiencia_id")
     private ExperienciaViaje experiencia;
     
     public Actividad() {
-        imagenes = new ArrayList();
+//        imagenes = new ArrayList();
     }
     
     public Long getId() {
@@ -76,13 +76,20 @@ public class Actividad implements Serializable, Comparable<Actividad> {
         this.fecha = fecha;
     }
 
-    public List<String> getImagenes() {
+    public String getImagenes() {
         return imagenes;
     }
 
-    public void setImagenes(List<String> imagenes) {
+    public void setImagenes(String imagenes) {
         this.imagenes = imagenes;
     }
+//    public List<String> getImagenes() {
+//        return imagenes;
+//    }
+//
+//    public void setImagenes(List<String> imagenes) {
+//        this.imagenes = imagenes;
+//    }
 
     public ExperienciaViaje getExperiencia() {
         return experiencia;

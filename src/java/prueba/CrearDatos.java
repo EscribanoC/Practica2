@@ -63,7 +63,7 @@ public class CrearDatos extends HttpServlet {
         usuario1.setApellidos("Pérez");
         usuario1.setEmail("pep@iescamas.es");
         usuario1.setPassword("1234");
-        usuario1.setTipo("normal");
+        usuario1.setTipo("usuario");
         usuario1.setActivo(false);
         su.create(usuario1);
         
@@ -72,7 +72,7 @@ public class CrearDatos extends HttpServlet {
         usuario2.setApellidos("Gutiérrez");
         usuario2.setEmail("guti@iescamas.es");
         usuario2.setPassword("1234");
-        usuario2.setTipo("normal");
+        usuario2.setTipo("usuario");
         usuario2.setActivo(false);
         su.create(usuario2);
         
@@ -87,7 +87,7 @@ public class CrearDatos extends HttpServlet {
         a1.setTitulo("Sendero del valle de Ordesa");
         a1.setFecha(new Date());
         a1.setDescripcion("Subimos por el valle de Ordesa hasta la cascada de La Cola de Caballo");
-        a1.getImagenes().add("foto1");
+        
         a1.setExperiencia(e1);
         sa.create(a1);
         
