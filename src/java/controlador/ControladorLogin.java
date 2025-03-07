@@ -60,17 +60,19 @@ public class ControladorLogin extends HttpServlet {
             emf.close();
             
             
-            if(u != null && u.getTipo().equals("usuario")){
+            if(u != null && u.getTipo().equals("usuario") && u.isActivo()){//Si el usuario existe, es de tipo usuario y está activo
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("usuario", u);
                 response.sendRedirect("usuario/Inicio");
                 return;
-            } else if(u != null && u.getTipo().equals("admin")){
+            } else if(u != null && u.getTipo().equals("admin")){//Si existe el usuario y es admin
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("usuario", u);
                 response.sendRedirect("admin/PanelAdministracion");
                 return;
-            }else{
+            } else if(!u.isActivo()){//Si no está activo
+                error = "La cuenta no está activa, tiene que esperar a que un admin se la active.";
+            }else{//Si las credenciales son incorrectas
                 error = "e-mail o contraseña incorrecta";
             }
         }

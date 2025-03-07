@@ -118,7 +118,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 return;
             }
 
-            //TODO A?adir im?genes
+            //TODO Añadir imágenes
             try {
                 //Crea la actividad
                 Actividad a = new Actividad();
@@ -140,15 +140,15 @@ public class ControladorEditarExperiencia extends HttpServlet {
 
         if (tipoSubmit.equals("Guardar Experiencia")) {//Si se quiere editar la experiencia
             System.out.println("Entra En guardar experiencia");
-            //Recoge los par?metros de la experiencia
+            //Recoge los parámetros de la experiencia
             String tituloExperiencia = request.getParameter("tituloExperiencia");
             String fechaExperiencia = request.getParameter("fechaExperiencia");
             String descripcionExperiencia = request.getParameter("descripcionExperiencia");
 
             if (tituloExperiencia == null || tituloExperiencia.isEmpty()
                     || fechaExperiencia == null || fechaExperiencia.isEmpty()
-                    || descripcionExperiencia == null || descripcionExperiencia.isEmpty()) {//Si los campos de la experiencia est?n vac?os
-                error = "Los campos de la experiencia no pueden estar vac?os";
+                    || descripcionExperiencia == null || descripcionExperiencia.isEmpty()) {//Si los campos de la experiencia están vacíos
+                error = "Los campos de la experiencia no pueden estar vacíos";
                 request.setAttribute("error", error);
                 getServletContext().getRequestDispatcher("/usuario/editarExperiencia.jsp").forward(request, response);
                 return;
@@ -177,7 +177,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
             } catch (Exception e) {
                 error = "Error: " + e.getMessage();
                 emf.close();
-            }
+            } 
         }
 
         request.setAttribute("error", error);

@@ -36,7 +36,7 @@ public class ControladorCrearExperiencia extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        getServletContext().getRequestDispatcher("Inicio").forward(request, response);
     }
 
     /**

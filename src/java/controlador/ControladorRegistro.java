@@ -67,12 +67,12 @@ public class ControladorRegistro extends HttpServlet {
             if(u == null){
                 u = new Usuario(email, password, nombre, apellidos);
                 su.create(u);
-                emf.close();
                 response.sendRedirect("ControladorLogin");
                 return;
             } else{
                 error= "El email ya está asociado a otro usuario";
             }
+            emf.close();
         }
         request.setAttribute("error", error);
         getServletContext().getRequestDispatcher("/registro.jsp").forward(request, response);

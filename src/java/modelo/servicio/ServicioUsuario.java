@@ -11,8 +11,11 @@ import javax.persistence.criteria.Root;
 import modelo.entidades.ExperienciaViaje;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import modelo.entidades.Opinion;
 import modelo.entidades.Usuario;
 import modelo.servicio.exceptions.NonexistentEntityException;
 
@@ -115,6 +118,9 @@ public class ServicioUsuario implements Serializable {
 
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
+        ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
+        ServicioOpinion so = new ServicioOpinion(emf);
+
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -126,10 +132,33 @@ public class ServicioUsuario implements Serializable {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
             List<ExperienciaViaje> experiencias = usuario.getExperiencias();
-            for (ExperienciaViaje experienciasExperienciaViaje : experiencias) {
-                experienciasExperienciaViaje.setUsuario(null);
-                experienciasExperienciaViaje = em.merge(experienciasExperienciaViaje);
+            System.out.println("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            if (!experiencias.isEmpty()) {
+                System.out.println("entrooooooooooooooooooooooooooooooooooooo");
+                for (ExperienciaViaje experiencia : experiencias) {
+                    System.out.println("Bucle eliminar usuario");
+                    try {
+                        System.out.println("Elimina usuario");
+                        sev.destroy(experiencia.getId());
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(ServicioUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
+            
+            List<Opinion> opiniones = so.findOpinionEntities();
+            opiniones.removeIf(opinion -> (!opinion.getUsuario().getId().equals(usuario.getId())));//Elimina las opiniones que no pertenzcan al usuario
+            //Lo ideal sería tener una función en el servicio que te busque opiniones por id de usuario
+            if (!opiniones.isEmpty()) {
+                for(Opinion opinion: opiniones){//Recorre cada opinión
+                    try {
+                        so.destroy(opinion.getId());//Elimina cada actividad
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(ServicioExperienciaViaje.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                };
+            }
+            
             em.remove(usuario);
             em.getTransaction().commit();
         } finally {
@@ -184,22 +213,22 @@ public class ServicioUsuario implements Serializable {
             em.close();
         }
     }
-    
-    public Usuario validarUsuario(String email, String password){
+
+    public Usuario validarUsuario(String email, String password) {
         List<Usuario> usuarios = findUsuarioEntities();
-        for (Usuario u : usuarios){
-            if(u.getEmail().equals(email) && u.getPassword().equals(password)){
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equals(email) && u.getPassword().equals(password)) {
                 return u;
             }
         }
         return null;
-        
+
     }
-    
-    public Usuario buscarPorEmail (String email){
+
+    public Usuario buscarPorEmail(String email) {
         List<Usuario> usuarios = findUsuarioEntities();
-        for(Usuario u:usuarios){
-            if(u.getEmail().equals(email)){
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equals(email)) {
                 return u;
             }
         }

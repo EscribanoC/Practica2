@@ -118,24 +118,27 @@ public class ServicioExperienciaViaje implements Serializable {
 
             List<Actividad> actividades = experienciaViaje.getActividades();
             if (!actividades.isEmpty()) {
-                actividades.forEach((actividad) -> {//Recorre cada actividad
+
+                for (Actividad actividad : actividades) {//Recorre cada actividad
+                    System.out.println("Actividades");
                     try {
                         sa.destroy(actividad.getId());//Elimina cada actividad
                     } catch (NonexistentEntityException ex) {
                         Logger.getLogger(ServicioExperienciaViaje.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                });
+
+                }
             }
-            
+
             List<Opinion> opiniones = experienciaViaje.getOpiniones();
             if (!opiniones.isEmpty()) {
-                opiniones.forEach((opinion) -> {//Recore cada opinión
+                for(Opinion opinion: opiniones){//Recorre cada opinión
                     try {
                         so.destroy(opinion.getId());//Elimina cada actividad
                     } catch (NonexistentEntityException ex) {
                         Logger.getLogger(ServicioExperienciaViaje.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                });
+                };
             }
 
             em.remove(experienciaViaje);

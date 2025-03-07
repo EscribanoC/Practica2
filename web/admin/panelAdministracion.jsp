@@ -58,7 +58,7 @@
                                     <a class="btnActivarUsuario" onclick="activarUsuario('${usuario.email}', '${usuario.id}', ${usuario.activo})">
                                         ${usuario.activo?"Desactivar":"Activar"}
                                     </a>
-                                    <button class="btnEliminar">Eliminar Usuario</button>
+                                    <button class="btnEliminar" onclick="eliminarUsuario('${usuario.email}', '${usuario.id}')">Eliminar Usuario</button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -109,6 +109,13 @@
                 }
             }
 
+        </script>
+        <script>
+            function eliminarUsuario(usuarioEmail, id){
+                if (confirm("Va a eliminar al usuario " + usuarioEmail + " con todas sus experiencias. ¿Está seguro? Los datos no se podrán recuperar luego." )) {
+                    window.location.href = "ControladorEliminarUsuario?idUsuario=" + id;
+                }
+            }
         </script>
         <script src="./js/editarUsuarioAdmin.js"></script>
     </body>
