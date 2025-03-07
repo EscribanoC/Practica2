@@ -63,12 +63,12 @@
 
                                 <textarea name="descripcionActividad" placeholder="Escribe una descripción para la actividad...">${actividad.descripcion}</textarea>
 
-                                <a href="ControladorCrearActividad" id="btnGuardarActividad" type="submit" name="tipoSubmit">Añadir Actividad</a>
+                                <button type="submit" id="btnGuardarActividad" type="submit" name="tipoSubmit" value="Añadir Actividad">Añadir Actividad</a>
                             </div>
                         </div>
                     </div>
                     <!-- Fin de Ventana Modal: Añadir Actividad-->
-                    <button name="tipoSubmit" type="submit">Guardar Experiencia</button>
+                    <button name="tipoSubmit" value="Guardar Experiencia" type="submit">Guardar Experiencia</button>
                 </form>
                 <a href="Experiencia?idExperiencia=${experiencia.id}">Volver</a>
                 <c:if test="${error != ''}"><p class="error">${error}</p></c:if>

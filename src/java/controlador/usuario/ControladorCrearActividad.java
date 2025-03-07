@@ -23,7 +23,7 @@ import modelo.servicio.ServicioExperienciaViaje;
  *
  * @author Carlos
  */
-@WebServlet(name = "ControladorCrearActividad", urlPatterns = {"/ControladorCrearActividad"})
+@WebServlet(name = "ControladorCrearActividad", urlPatterns = {"/usuario/ControladorCrearActividad"})
 public class ControladorCrearActividad extends HttpServlet {
 
     /**
@@ -37,7 +37,7 @@ public class ControladorCrearActividad extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**
