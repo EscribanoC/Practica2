@@ -14,4 +14,20 @@
             <max-file-size>1000000</max-file-size>
         </multipart-config>
     </servlet>
+    <!-- Servlet Jersey 
+<servlet>
+    <servlet-name>jersey-servlet</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+    <init-param>
+        <param-name>jersey.config.server.provider.packages</param-name>
+        <param-value>apirest</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>jersey-servlet</servlet-name>
+    <url-pattern>/apirest/*</url-pattern>
+</servlet-mapping>
+    -->
 </web-app>

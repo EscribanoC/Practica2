@@ -51,26 +51,30 @@ public class ControladorPublicarOpinion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Recoge los campos de la opinion a publicar y el id de la experiencia
         String opinion = request.getParameter("nuevaOpinion");
         String idExperiencia = request.getParameter("idExperiencia");
 
-        if (opinion == null || opinion.isEmpty()) {
-            response.sendRedirect("Experiencia?idExperiencia=" + idExperiencia);
+        if (opinion == null || opinion.isEmpty()) {//Si la opinión está vacía o no existe
+            response.sendRedirect("Experiencia?idExperiencia=" + idExperiencia);//Redirige a la página de la experiencia
             return;
         }
 
+        //Creación de los servicios y de la sesión
         HttpSession sesion = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioOpinion so = new ServicioOpinion(emf);
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
 
         try {
+            //Recoge la experiencia
             ExperienciaViaje ev = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
+            //Crea una opinión
             Opinion o = new Opinion();
             o.setContenido(opinion);
             o.setExperiencia(ev);
             o.setUsuario((Usuario) sesion.getAttribute("usuario"));
-            so.create(o);
+            so.create(o);//Se crea en la base de datos
         } catch (Exception e) {
             e.printStackTrace();
         }

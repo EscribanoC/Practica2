@@ -87,7 +87,7 @@ public class CrearDatos extends HttpServlet {
         a1.setTitulo("Sendero del valle de Ordesa");
         a1.setFecha(new Date());
         a1.setDescripcion("Subimos por el valle de Ordesa hasta la cascada de La Cola de Caballo");
-        
+        a1.setImagenes("imagen1.png");
         a1.setExperiencia(e1);
         sa.create(a1);
         

@@ -41,7 +41,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //Recoge el id de la experiencia a editar
         String idExperiencia = request.getParameter("idExperiencia");
 
         if (idExperiencia == null || idExperiencia.isEmpty()) {//Si el id de la experiencia es null o está vacía 
@@ -49,6 +49,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
             return;
         }
 
+        //Creación de sesion y servicio
         HttpSession sesion = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
@@ -131,7 +132,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 Date fechaNueva = formato.parse(fechaActividad);
                 a.setFecha(fechaNueva);
                 
-                //Guardar la imagen en la carpeta /usuario/media
+                //Creación del path absoluto del directorio para las imágenes
                 String path = getServletContext().getRealPath("usuario/media");
                 Part fichero = request.getPart("imagen");
                 
@@ -141,6 +142,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
                     InputStream contenido = fichero.getInputStream();
                     FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
                     byte[] buffer = new byte[8192];
+                    //Guarda la imagen en la carpeta /usuario/media mientras haya información
                     while (contenido.available() > 0) {
                         int bytesLeidos = contenido.read(buffer);
                         ficheroSalida.write(buffer, 0, bytesLeidos);
@@ -151,7 +153,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
                     a.setImagenes(fichero.getSubmittedFileName());
                 }
 
-                sa.create(a);
+                sa.create(a);//Crea la actividad
                 emf.close();
             } catch (Exception e) {
                 e.printStackTrace();

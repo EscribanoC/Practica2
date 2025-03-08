@@ -36,25 +36,31 @@ public class ControladorFiltroExperiencias extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession sesion = request.getSession();
+        //HttpSession sesion = request.getSession();
+        //Recoge el campo de filtro
         String filtro = request.getParameter("filtro");
         
-        if (filtro == null) {
+        if (filtro == null) {//Si el campo es nulo
             filtro = "";
         }
+        //Creación de servicio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
+        //Recoge la lista total de experiencias
         List<ExperienciaViaje> experiencias = sev.findExperienciaViajeEntities();
         emf.close();
+        //Edita las letras del filtro a minúsculas para poder comparar
         filtro = filtro.toLowerCase().trim();
+        //Creación de nueva lista con las experiencias filtradas
         List<ExperienciaViaje> filtradas = new ArrayList();
         
-        for (ExperienciaViaje ev: experiencias) {
+        for (ExperienciaViaje ev: experiencias) {//Por cada experiencia
             if (ev.getTitulo().toLowerCase().contains(filtro) || 
-                    ev.getDescripcion().toLowerCase().contains(filtro)) {
-                filtradas.add(ev);
+                    ev.getDescripcion().toLowerCase().contains(filtro)) {//Si el título o la descripción contiene el campo del filtro
+                filtradas.add(ev);//Se añade a la nueva lista de experiencias filtradas
             }
         }
+        //Se añade la nueva lista al apetición como atributo
         request.setAttribute("experiencias", filtradas);
         getServletContext().getRequestDispatcher("/usuario/filtroExperiencias.jsp").forward(request, response);
     }

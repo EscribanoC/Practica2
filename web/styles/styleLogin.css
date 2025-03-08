@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.contenedorInicio {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.contenedorInicio h1 {
+    font-family: 'Georgia', serif;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.contenedorInicio form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedorInicio label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+}
+
+.contenedorInicio input[type="email"],
+.contenedorInicio input[type="password"],
+.contenedorInicio input[type="text"]{
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contenedorInicio input[type="submit"] {
+    background-color: tomato;
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contenedorInicio input[type="submit"]:hover {
+    background-color: #ff6347;
+}
+
+.contenedorInicio .error {
+    color: red;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.contenedorInicio a {
+    color: tomato;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.contenedorInicio a:hover {
+    text-decoration: underline;
+}

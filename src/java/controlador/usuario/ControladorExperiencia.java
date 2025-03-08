@@ -33,9 +33,11 @@ public class ControladorExperiencia extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Creaicón de servicio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
 
+        //Recoge de la petición la id de la experiencia a mostrar
         String idExperiencia = request.getParameter("idExperiencia");
 
         //Busca la experiencia de viaje

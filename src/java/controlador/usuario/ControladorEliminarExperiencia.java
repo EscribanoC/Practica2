@@ -44,10 +44,12 @@ public class ControladorEliminarExperiencia extends HttpServlet {
             return;
         }
         
+        //Creación de servicio y sesión
         HttpSession sesion = request.getSession();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
         
+        //Recoge la experiencia a eliminar
         ExperienciaViaje e = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
         
         
@@ -58,7 +60,7 @@ public class ControladorEliminarExperiencia extends HttpServlet {
             return;
         }
         
-        try {//Elimina la experiencia con todos los elemntos que dependan de él
+        try {//Elimina la experiencia con todos los elementos que dependan de él
             sev.destroy(e.getId());
             
         } catch (NonexistentEntityException ex) {
@@ -66,7 +68,7 @@ public class ControladorEliminarExperiencia extends HttpServlet {
         }
         emf.close();
         
-        response.sendRedirect("Inicio");
+        response.sendRedirect("Inicio");//Redirige a la pantalla de inicio
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

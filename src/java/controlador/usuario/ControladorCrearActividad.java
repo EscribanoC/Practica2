@@ -60,7 +60,7 @@ public class ControladorCrearActividad extends HttpServlet {
         ServicioActividad sa = new ServicioActividad(emf);
         ExperienciaViaje experienciaOriginal = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
 
-        // Definir el formato del string
+        //Define el formato de la fecha para parsear
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
         request.setAttribute("experiencia", experienciaOriginal);
@@ -81,7 +81,6 @@ public class ControladorCrearActividad extends HttpServlet {
             return;
         }
 
-        //TODO Añadir imágenes
         try {
             //Crea la actividad
             Actividad a = new Actividad();

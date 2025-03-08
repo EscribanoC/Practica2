@@ -41,21 +41,21 @@ public class ControladorEliminarActividad extends HttpServlet {
             response.sendRedirect("Inicio");//Redirige el cliente a la vista inicio
             return;
         }
-
+        //Creación de servicio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioActividad sa = new ServicioActividad(emf);
-
+        //Recoge la actividad
         Actividad a = sa.findActividad(Long.valueOf(idActividad));
 
-        if (a != null) {
+        if (a != null) {//Si la actividad existe
             try {
-                sa.destroy(Long.valueOf(idActividad));
+                sa.destroy(Long.valueOf(idActividad));//Elimina la actividad
             } catch (NonexistentEntityException ex) {
                 Logger.getLogger(ControladorEliminarExperiencia.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         emf.close();
-        response.sendRedirect("EditarExperiencia?idExperiencia=" + a.getExperiencia().getId());
+        response.sendRedirect("EditarExperiencia?idExperiencia=" + a.getExperiencia().getId());//Redirige a la vista de la edición
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

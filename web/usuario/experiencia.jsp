@@ -82,11 +82,14 @@
                                     </ul>
                                 </div>
                             </c:if>
+
                             <div class="contenedorImagenes">
                                 <c:forEach var="actividad" items="${experiencia.actividades}">
-                                    <figure class="imagenEnMiniatura">
-                                        <img src="./media/${actividad.imagenes}" id="imagenActividad" alt="imagenActividad"/>
-                                    </figure>
+                                    <c:if test="${actividad.imagenes != null}">
+                                        <figure class="imagenEnMiniatura">
+                                            <img src="./media/${actividad.imagenes}" id="imagenActividad" alt="imagenActividad"/>
+                                        </figure>
+                                    </c:if>
                                 </c:forEach>
                             </div>
 

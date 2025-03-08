@@ -4,8 +4,6 @@
 package controlador.admin;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -36,20 +34,24 @@ public class ControladorActivarUsuario extends HttpServlet {
             throws ServletException, IOException {
         String idUsuario = request.getParameter("idUsuario");
 
-        if (idUsuario == null || idUsuario.isEmpty()) {
+        if (idUsuario == null || idUsuario.isEmpty()) {//Si la id del usuario a activar está vacía
             response.sendRedirect("panelAdministracion");
             return;
         }
 
+        //Creación de servicio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioUsuario su = new ServicioUsuario(emf);
 
         try {
+            //Recoge el usuario
             Usuario u = su.findUsuario(Long.valueOf(idUsuario));
+            //Se cambia el atributo que indica si está activo
             u.setActivo(!u.isActivo());
             su.edit(u);
             
             if (u.isActivo()) {//Si se ha activado 
+                //Llama al controlador que se encargará de enviar un email al usuario
                 response.sendRedirect("ControladorEnviarEmail?to=" + u.getEmail());
                 return;
             }

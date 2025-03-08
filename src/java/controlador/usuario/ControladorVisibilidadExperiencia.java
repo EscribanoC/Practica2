@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.entidades.ExperienciaViaje;
 import modelo.servicio.ServicioExperienciaViaje;
-import modelo.servicio.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -33,39 +32,31 @@ public class ControladorVisibilidadExperiencia extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //Recoge la id de la experiencia
         String idExperiencia = request.getParameter("idExperiencia");
-        if (idExperiencia == null || idExperiencia.isEmpty()) {
+        
+        if (idExperiencia == null || idExperiencia.isEmpty()) {//Si la id está vacía o no existe
             response.sendRedirect("Inicio");
             return;
         }
 
-        try{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
-        ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
-        
-        
-        //Se crean las dos instancias de experiencias, la original y la que cambiará el atributo 'publico'
-        ExperienciaViaje experienciaOriginal = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
-        ExperienciaViaje experienciaCambiada = new ExperienciaViaje();
-        
-        
-        experienciaCambiada.setId(experienciaOriginal.getId());
-        experienciaCambiada.setTitulo(experienciaOriginal.getTitulo());
-        experienciaCambiada.setFechaInicio(experienciaOriginal.getFechaInicio());
-        experienciaCambiada.setDescripcion(experienciaOriginal.getDescripcion());
-        experienciaCambiada.setUsuario(experienciaOriginal.getUsuario());
-        experienciaCambiada.setActividades(experienciaOriginal.getActividades());
-        experienciaCambiada.setOpiniones(experienciaOriginal.getOpiniones());
-        
-        experienciaCambiada.setPublico(experienciaOriginal.isPublico()?false:true);
-        sev.edit(experienciaCambiada);
-        emf.close();
-        
-        }catch(Exception e){
+        try {
+            //Creación de servicio
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
+            ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
+
+            //Se recoge la experiencia a modificar
+            ExperienciaViaje experiencia = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
+            
+            //Se le cambia el atributo que indica si es una experiencia pública o privada
+            experiencia.setPublico(experiencia.isPublico() ? false : true);
+            sev.edit(experiencia);//Se modifica en la base de datos
+            emf.close();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         response.sendRedirect("Experiencia?idExperiencia=" + idExperiencia);
     }
 

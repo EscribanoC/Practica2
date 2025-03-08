@@ -5,7 +5,6 @@ package controlador.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class ControladorCargarGraficaUsuarios extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //Creación de servicio
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioUsuario su = new ServicioUsuario(emf);
 
