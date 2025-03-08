@@ -37,7 +37,7 @@
     </head>
     <body>
         <header>
-            <a href="Inicio"><h1>Inicio</h1></a>
+            <h1><a href="Inicio">myExperience</a></h1>
             <div class="cabeceraUsuario">
                 <div>
                     <a href="Perfil?idPerfilUsuario=${usuario.id}" ><h3>Usuario: ${usuario}</h3></a>

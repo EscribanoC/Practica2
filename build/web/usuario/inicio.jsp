@@ -17,9 +17,9 @@
     </head>
     <body onload="filtrarExperiencias()">
         <header>
-            <h1>Inicio</h1>
+            <h1><a href="Inicio">myExperience</a></h1>
             <div class="cabeceraUsuario">
-                <input type="text" id="filtroBusqueda" oninput="filtrarExperiencias()" placeholder="Buscar experiencia...">
+                <input id="filtroBusqueda" type="text" id="filtroBusqueda" oninput="filtrarExperiencias()" placeholder="Buscar experiencia...">
                 <div>
                     <a href="Perfil?idPerfilUsuario=${usuario.id}" ><h3>Usuario: ${usuario}</h3></a>
                     <p>Tipo: ${usuario.tipo}</p>

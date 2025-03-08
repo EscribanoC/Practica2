@@ -49,6 +49,7 @@ public class CrearDatos extends HttpServlet {
         ServicioActividad sa = new ServicioActividad(emf);
         ServicioOpinion so = new ServicioOpinion(emf);
         
+        //Usuario ADMIN
         Usuario admin = new Usuario();
         admin.setNombre("Carlos");
         admin.setApellidos("Escribano Flores");
@@ -58,13 +59,14 @@ public class CrearDatos extends HttpServlet {
         admin.setActivo(true);
         su.create(admin);
         
+        //Usuarios normales
         Usuario usuario1 = new Usuario();
         usuario1.setNombre("Pepe");
         usuario1.setApellidos("Pérez");
         usuario1.setEmail("pep@iescamas.es");
         usuario1.setPassword("1234");
         usuario1.setTipo("usuario");
-        usuario1.setActivo(false);
+        usuario1.setActivo(true);
         su.create(usuario1);
         
         Usuario usuario2 = new Usuario();
@@ -76,6 +78,26 @@ public class CrearDatos extends HttpServlet {
         usuario2.setActivo(false);
         su.create(usuario2);
         
+        Usuario usuario3 = new Usuario();
+        usuario3.setNombre("Carlos");
+        usuario3.setApellidos("González");
+        usuario3.setEmail("carlos@iescamas.es");
+        usuario3.setPassword("1234");
+        usuario3.setTipo("usuario");
+        usuario3.setActivo(false);
+        su.create(usuario3);
+        
+        Usuario usuario4 = new Usuario();
+        usuario4.setNombre("Jesús");
+        usuario4.setApellidos("González");
+        usuario4.setEmail("jesus@iescamas.es");
+        usuario4.setPassword("1234");
+        usuario4.setTipo("usuario");
+        usuario4.setActivo(false);
+        su.create(usuario4);
+        
+        
+        //Experiencias
         ExperienciaViaje e1 = new ExperienciaViaje();
         e1.setTitulo("Vacaciones de verano 2024");
         e1.setDescripcion("Pasamos unos días en los Pirineos");
@@ -83,6 +105,22 @@ public class CrearDatos extends HttpServlet {
         e1.setUsuario(usuario1);
         se.create(e1);
         
+        ExperienciaViaje e2 = new ExperienciaViaje();
+        e2.setTitulo("Visita al departamento");
+        e2.setDescripcion("Había muchos ordenadores.");
+        e2.setFechaInicio(new Date());
+        e2.setUsuario(usuario2);
+        se.create(e2);
+        
+        ExperienciaViaje e3 = new ExperienciaViaje();
+        e3.setTitulo("Viaje a la Los Caños de Meca");
+        e3.setDescripcion("Fue una vaije encantador.");
+        e3.setFechaInicio(new Date());
+        e3.setUsuario(usuario2);
+        se.create(e3);
+        
+        
+        //Actividad y opinión
         Actividad a1 = new Actividad();
         a1.setTitulo("Sendero del valle de Ordesa");
         a1.setFecha(new Date());
