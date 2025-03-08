@@ -60,11 +60,15 @@
                         </div>
                         <form method="post" class="formularioEditarActividad" enctype="multipart/form-data">
                             <section>
-                                <input type="hidden" name="idActividad">
+                                <input type="hidden" name="idExperiencia" value="${experiencia.id}">
+                                <input type="hidden" name="idActividad" id="idActividad">
                                 <input type="text" name="tituloActividad" placeholder="Título" id="tituloActividad">
                                 <input type="date" name="fechaActividad" id="fechaActividad">
                             </section>
-                            <textarea name="descripcionActividad" id="descripcionActividad" placeholder="Escribe una descripción para la actividad...">${actividad.descripcion}</textarea>
+                            <textarea name="descripcionActividad" id="descripcionActividad" placeholder="Escribe una descripción para la actividad..."></textarea>
+                            <figure class="imagenEnMiniatura">
+                                <img id="imagenActividad" alt="imagenActividad"/>
+                            </figure>
                             <input type="file" name="imagen">
                             <button type="submit" id="btnGuardarActividad" type="submit" name="tipoSubmit" value="Añadir Actividad">Añadir Actividad</button>
                         </form>
@@ -76,9 +80,17 @@
                 </div>
             </main>
             <script>
+
                 const btnAnadirAct = document.querySelector(".btnAnadirAct");
                 const modal = document.querySelector(".modal");
                 btnAnadirAct.addEventListener("click", (e) => {
+                    document.querySelector(".formularioEditarActividad").action = "";
+                    document.querySelector("#idActividad").value = "";
+                    document.querySelector("#tituloActividad").value = "";
+                    document.querySelector("#fechaActividad").value = "";
+                    document.querySelector("#descripcionActividad").value = "";
+                    document.querySelector(".imagenEnMiniatura").style.display = "none";
+                    document.querySelector("#imagenActividad").src = "";
                     e.preventDefault();
                     document.getElementById('modal').style.display = 'flex';
                 });
@@ -90,31 +102,6 @@
                 };
 
             </script>
-            <script>
-                async function editarActividad(idActividad) {
-                    try {
-
-                        let url = "ControladorEditarActividad?idActividad=" + idActividad;
-
-                        const res = await fetch(url)
-                        if (!res.ok) { //Si la respuesta no es correcta
-                            throw new Error(`Error en la solicitud: ${res.statusText}`);
-                        }
-
-                        let actividad = await res.json();//Parsea la respuesta a JSON
-
-                        //console.log(actividad)
-                        document.querySelector("#tituloActividad").value = actividad.titulo;
-                        document.querySelector("#fechaActividad").value = actividad.fecha;
-                        document.querySelector("#descripcionActividad").value = actividad.descripcion;
-                        
-                        //Muestra la modal
-                        document.getElementById('modal').style.display = 'flex';
-                    } catch (error) {
-                        console.error("ERROR EN LA PETICIÓN: " + error)
-                    }
-
-                }
-        </script>
+            <script src="../js/editarActividad.js"></script>
     </body>
 </html>

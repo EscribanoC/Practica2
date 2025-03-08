@@ -7,4 +7,11 @@
             <max-file-size>1000000</max-file-size>
         </multipart-config>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorEditarActividad</servlet-name>
+        <servlet-class>controlador.usuario.ControladorEditarActividad</servlet-class>
+        <multipart-config>
+            <max-file-size>1000000</max-file-size>
+        </multipart-config>
+    </servlet>
 </web-app>

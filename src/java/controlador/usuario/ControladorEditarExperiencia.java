@@ -161,7 +161,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
         
         //Si se quiere editar la experiencia
         if (tipoSubmit.equals("Guardar Experiencia")) {
-            System.out.println("Entra En guardar experiencia");
+            
             //Recoge los parámetros de la experiencia
             String tituloExperiencia = request.getParameter("tituloExperiencia");
             String fechaExperiencia = request.getParameter("fechaExperiencia");

@@ -3,7 +3,9 @@
  */
 package controlador.usuario;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import modelo.entidades.Actividad;
 import modelo.servicio.ServicioActividad;
 
@@ -23,15 +26,15 @@ import modelo.servicio.ServicioActividad;
 public class ControladorEditarActividad extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String idActividad = request.getParameter("idActividad");
 
@@ -79,21 +82,6 @@ public class ControladorEditarActividad extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -105,7 +93,64 @@ public class ControladorEditarActividad extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String idExperiencia = request.getParameter("idExperiencia");
+
+        if (idExperiencia == null || idExperiencia.isEmpty()) {//Si la idExperiencia no se recibe
+            response.sendRedirect("Inicio");
+            return;
+        }
+
+        //Se recogen los campos del formulario de edición de Actividad
+        String idActividad = request.getParameter("idActividad");
+        String titulo = request.getParameter("tituloActividad").trim();
+        String descripcion = request.getParameter("descripcionActividad").trim();
+        String fecha = request.getParameter("fechaActividad").trim();
+        
+        //Guardar la imagen en la carpeta /usuario/media
+        String path = getServletContext().getRealPath("usuario/media");
+        //System.out.println(" **** Path: " + path);
+        Part imagen = request.getPart("imagen");
+        String nombreImagen = path + "/" + imagen.getSubmittedFileName();
+        InputStream contenido = imagen.getInputStream();
+        FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
+        byte[] buffer = new byte[8192];
+        while (contenido.available() > 0) {
+            int bytesLeidos = contenido.read(buffer);
+            ficheroSalida.write(buffer, 0, bytesLeidos);
+        }
+        ficheroSalida.close();
+        contenido.close();
+
+        // Defino el formato del string para la fecha
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+
+        //Si algún de los campos que se reciben(exceptuando la imagen) no se envía o está vacío
+        if (idActividad == null || idActividad.isEmpty()
+                || titulo == null || titulo.isEmpty()
+                || descripcion == null || descripcion.isEmpty()
+                || fecha == null || fecha.isEmpty()) {
+            response.sendRedirect("EditarExperiencia?idExperiencia=" + idExperiencia);
+            return;
+        }
+
+        try {
+            //Creación de servicio
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
+            ServicioActividad sa = new ServicioActividad(emf);
+
+            //Creación nueva instancia de Actividad
+            Actividad aOriginal = sa.findActividad(Long.valueOf(idActividad));
+            Actividad aNueva = new Actividad();
+            aNueva.setId(aOriginal.getId());
+            aNueva.setTitulo(idActividad);
+
+            emf.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("EditarExperiencia?idExperiencia=" + idExperiencia);
     }
 
     /**
