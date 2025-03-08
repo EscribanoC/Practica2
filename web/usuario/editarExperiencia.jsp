@@ -39,12 +39,12 @@
                     <ul class="listaActividades">
                         <c:if test="${!experiencia.actividades.isEmpty()}">
                             <c:forEach var="actividad" items="${experiencia.actividades}">
-                                <li class="actividad">${actividad}</li>
+                                <li onclick="editarActividad(${actividad.id})" class="actividad">${actividad}</li>
                                 </c:forEach>
                             </c:if>
                         <li><button class="btnAnadirAct">Añadir Actividad</button></li>
                     </ul>
-                    
+
                     <button name="tipoSubmit" value="Guardar Experiencia" type="submit">Guardar Experiencia</button>
                 </form>
 
@@ -60,66 +60,61 @@
                         </div>
                         <form method="post" class="formularioEditarActividad" enctype="multipart/form-data">
                             <section>
-                                <input type="hidden" name="idActividad" value="${actividad.id}">
-                                <input type="text" name="tituloActividad" placeholder="Título" value="${actividad.titulo}">
-                                <input type="date" name="fechaActividad" value="${actividadFecha}">
+                                <input type="hidden" name="idActividad">
+                                <input type="text" name="tituloActividad" placeholder="Título" id="tituloActividad">
+                                <input type="date" name="fechaActividad" id="fechaActividad">
                             </section>
-                            <input type="hidden" name="tipoSubmit" value="Añadir Actividad">
-                            <textarea name="descripcionActividad" placeholder="Escribe una descripción para la actividad...">${actividad.descripcion}</textarea>
+                            <textarea name="descripcionActividad" id="descripcionActividad" placeholder="Escribe una descripción para la actividad...">${actividad.descripcion}</textarea>
                             <input type="file" name="imagen">
-                            <button type="submit" id="btnGuardarActividad" type="submit" >Añadir Actividad</button>
+                            <button type="submit" id="btnGuardarActividad" type="submit" name="tipoSubmit" value="Añadir Actividad">Añadir Actividad</button>
                         </form>
                     </div>
                 </div>
                 <!-- Fin de Ventana Modal: Añadir Actividad-->
                 <a href="Experiencia?idExperiencia=${experiencia.id}">Volver</a>
                 <c:if test="${error != ''}"><p class="error">${error}</p></c:if>
-            </div>
-        </main>
-        <script>
-            const btnAnadirAct = document.querySelector(".btnAnadirAct");
-            const modal = document.querySelector(".modal");
-            btnAnadirAct.addEventListener("click", (e) => {
-                e.preventDefault();
-                document.getElementById('modal').style.display = 'flex';
-            });
+                </div>
+            </main>
+            <script>
+                const btnAnadirAct = document.querySelector(".btnAnadirAct");
+                const modal = document.querySelector(".modal");
+                btnAnadirAct.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    document.getElementById('modal').style.display = 'flex';
+                });
 
-            window.onclick = function (event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
+                window.onclick = function (event) {
+                    if (event.target === modal) {
+                        modal.style.display = "none";
+                    }
+                };
+
+            </script>
+            <script>
+                async function editarActividad(idActividad) {
+                    try {
+
+                        let url = "ControladorEditarActividad?idActividad=" + idActividad;
+
+                        const res = await fetch(url)
+                        if (!res.ok) { //Si la respuesta no es correcta
+                            throw new Error(`Error en la solicitud: ${res.statusText}`);
+                        }
+
+                        let actividad = await res.json();//Parsea la respuesta a JSON
+
+                        //console.log(actividad)
+                        document.querySelector("#tituloActividad").value = actividad.titulo;
+                        document.querySelector("#fechaActividad").value = actividad.fecha;
+                        document.querySelector("#descripcionActividad").value = actividad.descripcion;
+                        
+                        //Muestra la modal
+                        document.getElementById('modal').style.display = 'flex';
+                    } catch (error) {
+                        console.error("ERROR EN LA PETICIÓN: " + error)
+                    }
+
                 }
-            };
-
         </script>
-        <!-- SI TENGO TIEMPO
-        <script>
-            const btnGuardarActividad = document.querySelector(".btnGuardarActividad");
-
-            //Permite codificar la codificación de la respuesta en la petición fetch
-            var cabecera = new Headers();
-            cabecera.append('Content-Type', 'text/plain; charset=ISO-8859-1');
-            cabecera.append('method', 'POST');
-            cabecera.append('body',  })
-     
-            //Evento que guardará una actividad
-            btnGuardarActividad.addEventListener("click", (e) => {
-                e.preventDefault();
-                
-                fetch("ControladorFiltroExperiencias", cabecera)
-                        .then(function (response) {
-                            return response.arrayBuffer();
-                        })
-                        .then(data => {
-                            const decoder = new TextDecoder('ISO-8859-1');
-                            data = decoder.decode(data);
-                            document.querySelector("#listaExperiencias").innerHTML = data;
-                        })
-                        .catch((error) => {
-                            console.error('Error: ' + error);
-                        });
-            });
-            
-        </script>
-        -->
     </body>
 </html>

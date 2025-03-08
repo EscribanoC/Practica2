@@ -7,9 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -66,7 +64,6 @@ public class ControladorEditarExperiencia extends HttpServlet {
         Usuario usuarioExperiencia = ev.getUsuario();
         Usuario usuarioSesion = (Usuario) sesion.getAttribute("usuario");
         if (usuarioExperiencia.getId().compareTo(usuarioSesion.getId()) != 0) {//Si la experiencia que se intenta editar no pertenece al cliente de la sesión
-            System.out.println("illo");
             response.sendRedirect("Inicio");//Al cliente se le envía al inicio
             return;
         }
@@ -93,21 +90,25 @@ public class ControladorEditarExperiencia extends HttpServlet {
         String idExperiencia = request.getParameter("idExperiencia");
         String tipoSubmit = request.getParameter("tipoSubmit");
         String error = "";
+        
         //Creación de servicios
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
         ServicioActividad sa = new ServicioActividad(emf);
+        //Guarda la experiencia original
         ExperienciaViaje experienciaOriginal = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
 
-        // Definir el formato del string
+        // Defino el formato del string para la fecha
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
         request.setAttribute("experiencia", experienciaOriginal);
         //Para recuperar la fecha de inico de la experiencia en la vista, se tiene que parsear al formato 'yyyy-MM-dd
         request.setAttribute("experienciaFecha", formato.format(experienciaOriginal.getFechaInicio()));
 
-        System.out.println("Tipo submit" + tipoSubmit);
-        if (tipoSubmit.equals("Añadir Actividad")) {//Si se añade una actividad
+        
+        
+        //Si se añade una actividad
+        if (tipoSubmit.equals("Añadir Actividad")) {
             //Recoge los parámetros de la actividad a añadir
             String tituloActividad = request.getParameter("tituloActividad");
             String fechaActividad = request.getParameter("fechaActividad");
@@ -147,9 +148,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 // Convertir el String a Date
                 Date fechaNueva = formato.parse(fechaActividad);
                 a.setFecha(fechaNueva);
-                
-                
-                
+
                 sa.create(a);
                 emf.close();
             } catch (Exception e) {
@@ -157,8 +156,11 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 emf.close();
             }
         }
-
-        if (tipoSubmit.equals("Guardar Experiencia")) {//Si se quiere editar la experiencia
+        
+        
+        
+        //Si se quiere editar la experiencia
+        if (tipoSubmit.equals("Guardar Experiencia")) {
             System.out.println("Entra En guardar experiencia");
             //Recoge los parámetros de la experiencia
             String tituloExperiencia = request.getParameter("tituloExperiencia");
