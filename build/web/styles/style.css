@@ -34,7 +34,7 @@ main{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 800px;
+    width: 820px;
     margin: 30px;
 
     .container-crearExperiencia {
@@ -63,7 +63,8 @@ main{
                 font-size: 14px;
             }
 
-            button{
+            
+            .botonFormulario{
                 padding: 10px;
                 border-radius: 10px;
                 border: none;
@@ -72,7 +73,7 @@ main{
                 font-weight: bold;
             }
 
-            button:active{
+            .botonFormulario:active{
                 background: salmon;
             }
         }
@@ -261,7 +262,7 @@ main{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 14px;
     .actividad{
         display: flex;
         align-items: center;
@@ -270,6 +271,24 @@ main{
         border: 1px solid black;
         border-radius: 10px;
         width: fit-content;
+        position: relative;
+        .btnEliminarActividad{
+            position: absolute;
+            display: none;
+            right: -12px;
+            top: -12px;
+            border-radius: 100%;
+            border: 1px solid crimson;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            width: 25px;
+            height: 25px;
+            
+        }
+        .btnEliminarActividad:hover {
+            cursor: pointer;
+        }
     }
 
     .actividad:hover{
@@ -279,6 +298,10 @@ main{
         box-shadow: 0 0 10px 5px rgba(0,0,0,0.05);
         color:crimson;
         border-color: crimson;
+    }
+    
+    .actividad:hover .btnEliminarActividad{
+        display: flex;
     }
 }
 
@@ -323,6 +346,14 @@ main{
             height: 100px;
         }
     }
+}
+
+.contenedorImagenes{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 5px;
 }
 
 .imagenEnMiniatura{

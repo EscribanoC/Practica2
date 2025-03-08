@@ -39,7 +39,7 @@
                     </section>
 
                     <textarea name="descripcion" placeholder="Escribe una descripción para la experiencia..." rows="6"></textarea>
-                    <button type="submit">Publicar</button>
+                    <button class="botonFormulario" type="submit">Publicar</button>
                 </form>
                 <c:if test="${error != null}"><p class="error">${error}</p></c:if>
             </div>

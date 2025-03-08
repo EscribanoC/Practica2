@@ -90,7 +90,7 @@ public class ControladorEditarExperiencia extends HttpServlet {
         String idExperiencia = request.getParameter("idExperiencia");
         String tipoSubmit = request.getParameter("tipoSubmit");
         String error = "";
-        
+
         //Creación de servicios
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
         ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
@@ -105,8 +105,6 @@ public class ControladorEditarExperiencia extends HttpServlet {
         //Para recuperar la fecha de inico de la experiencia en la vista, se tiene que parsear al formato 'yyyy-MM-dd
         request.setAttribute("experienciaFecha", formato.format(experienciaOriginal.getFechaInicio()));
 
-        
-        
         //Si se añade una actividad
         if (tipoSubmit.equals("Añadir Actividad")) {
             //Recoge los parámetros de la actividad a añadir
@@ -123,45 +121,48 @@ public class ControladorEditarExperiencia extends HttpServlet {
                 return;
             }
 
-            //Guardar la imagen en la carpeta /usuario/media
-            String path = getServletContext().getRealPath("usuario/media");
-            //System.out.println(" **** Path: " + path);
-            Part fichero = request.getPart("imagen");
-            String nombreImagen = path + "/" + fichero.getSubmittedFileName();
-            InputStream contenido = fichero.getInputStream();
-            FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
-            byte[] buffer = new byte[8192];
-            while (contenido.available() > 0) {
-                int bytesLeidos = contenido.read(buffer);
-                ficheroSalida.write(buffer, 0, bytesLeidos);
-            }
-            ficheroSalida.close();
-            contenido.close();
-
             try {
                 //Crea la actividad
                 Actividad a = new Actividad();
                 a.setTitulo(tituloActividad);
                 a.setDescripcion(descripcionActividad);
                 a.setExperiencia(experienciaOriginal);
-                a.setImagenes(fichero.getSubmittedFileName());
                 // Convertir el String a Date
                 Date fechaNueva = formato.parse(fechaActividad);
                 a.setFecha(fechaNueva);
+                
+                //Guardar la imagen en la carpeta /usuario/media
+                String path = getServletContext().getRealPath("usuario/media");
+                Part fichero = request.getPart("imagen");
+                
+                if (fichero != null && fichero.getSize() > 0) { //Si no se ha enviado un null y si se ha enviado algo
+
+                    String nombreImagen = path + "/" + fichero.getSubmittedFileName();
+                    InputStream contenido = fichero.getInputStream();
+                    FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
+                    byte[] buffer = new byte[8192];
+                    while (contenido.available() > 0) {
+                        int bytesLeidos = contenido.read(buffer);
+                        ficheroSalida.write(buffer, 0, bytesLeidos);
+                    }
+                    ficheroSalida.close();
+                    contenido.close();
+                    //Se guarda la ruta de la imagen en la base de datos
+                    a.setImagenes(fichero.getSubmittedFileName());
+                }
 
                 sa.create(a);
                 emf.close();
             } catch (Exception e) {
+                e.printStackTrace();
                 error = "Error: " + e.getMessage();
                 emf.close();
             }
         }
-        
-        
-        
+
         //Si se quiere editar la experiencia
         if (tipoSubmit.equals("Guardar Experiencia")) {
-            
+
             //Recoge los parámetros de la experiencia
             String tituloExperiencia = request.getParameter("tituloExperiencia");
             String fechaExperiencia = request.getParameter("fechaExperiencia");

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -16,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import modelo.entidades.Actividad;
+import modelo.entidades.ExperienciaViaje;
 import modelo.servicio.ServicioActividad;
+import modelo.servicio.ServicioExperienciaViaje;
 
 /**
  *
@@ -105,21 +108,6 @@ public class ControladorEditarActividad extends HttpServlet {
         String titulo = request.getParameter("tituloActividad").trim();
         String descripcion = request.getParameter("descripcionActividad").trim();
         String fecha = request.getParameter("fechaActividad").trim();
-        
-        //Guardar la imagen en la carpeta /usuario/media
-        String path = getServletContext().getRealPath("usuario/media");
-        //System.out.println(" **** Path: " + path);
-        Part imagen = request.getPart("imagen");
-        String nombreImagen = path + "/" + imagen.getSubmittedFileName();
-        InputStream contenido = imagen.getInputStream();
-        FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
-        byte[] buffer = new byte[8192];
-        while (contenido.available() > 0) {
-            int bytesLeidos = contenido.read(buffer);
-            ficheroSalida.write(buffer, 0, bytesLeidos);
-        }
-        ficheroSalida.close();
-        contenido.close();
 
         // Defino el formato del string para la fecha
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -137,15 +125,49 @@ public class ControladorEditarActividad extends HttpServlet {
             //Creación de servicio
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("Practica2PU");
             ServicioActividad sa = new ServicioActividad(emf);
+            ServicioExperienciaViaje sev = new ServicioExperienciaViaje(emf);
 
+            ExperienciaViaje e = sev.findExperienciaViaje(Long.valueOf(idExperiencia));
+            
             //Creación nueva instancia de Actividad
             Actividad aOriginal = sa.findActividad(Long.valueOf(idActividad));
             Actividad aNueva = new Actividad();
             aNueva.setId(aOriginal.getId());
-            aNueva.setTitulo(idActividad);
+            aNueva.setTitulo(titulo);
+            aNueva.setDescripcion(descripcion);
+            aNueva.setExperiencia(e);
+            aNueva.setImagenes(aOriginal.getImagenes());
+            
+            //Crea un objeto Date que es el que se guardará en la base de datos
+            Date fechaFormateada = formatoFecha.parse(fecha);
+            aNueva.setFecha(fechaFormateada);
+
+            //Guardar la imagen en la carpeta /usuario/media
+            String path = getServletContext().getRealPath("usuario/media");
+            Part imagen = request.getPart("imagen");
+
+            if (imagen != null && imagen.getSize() > 0) { //Si no se ha enviado un null y si se ha enviado algo
+                System.out.println("illo");
+                //Guarda el fichero en el directorio con la ruta absoluta /usuario/media
+                String nombreImagen = path + "/" + imagen.getSubmittedFileName();
+                InputStream contenido = imagen.getInputStream();
+                FileOutputStream ficheroSalida = new FileOutputStream(nombreImagen);
+                byte[] buffer = new byte[8192];
+                while (contenido.available() > 0) {
+                    int bytesLeidos = contenido.read(buffer);
+                    ficheroSalida.write(buffer, 0, bytesLeidos);
+                }
+                ficheroSalida.close();
+                contenido.close();
+
+                //Se guarda la ruta de la imagen en la base de datos
+                aNueva.setImagenes(imagen.getSubmittedFileName());
+            }
+
+            //Se modifica la actividad
+            sa.edit(aNueva);
 
             emf.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

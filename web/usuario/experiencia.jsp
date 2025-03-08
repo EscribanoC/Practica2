@@ -82,6 +82,15 @@
                                     </ul>
                                 </div>
                             </c:if>
+                            <div class="contenedorImagenes">
+                                <c:forEach var="actividad" items="${experiencia.actividades}">
+                                    <figure class="imagenEnMiniatura">
+                                        <img src="./media/${actividad.imagenes}" id="imagenActividad" alt="imagenActividad"/>
+                                    </figure>
+                                </c:forEach>
+                            </div>
+
+
                         </div>
                         <c:if test="${usuario != null}">
                             <hr>
@@ -111,10 +120,11 @@
         </main>
         <script>
             function eliminarExperiencia(id) {
-                if(confirm("¿Estás seguro de eliminar la experiencia? Perderás toda la información: actividades e imágenes.")){
+                if (confirm("¿Estás seguro de eliminar la experiencia? Perderás toda la información: actividades e imágenes.")) {
                     window.location.href = "ControladorEliminarExperiencia?idExperiencia=" + id;
                 }
-            };
+            }
+            ;
         </script>
     </body>
 </html>
