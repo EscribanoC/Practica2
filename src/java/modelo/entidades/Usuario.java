@@ -3,6 +3,11 @@
  */
 package modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -36,6 +41,8 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     private boolean activo;
     @OneToMany(mappedBy = "usuario")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIgnore
     private List<ExperienciaViaje> experiencias;
 
     //Constructor

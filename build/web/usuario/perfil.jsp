@@ -33,27 +33,28 @@
                     <c:when  test="${experiencias != []}">
                         <c:forEach var="experiencia" items="${experiencias}">
                             <c:if test="${(experiencia.publico && experiencia.usuario.id != usuario.id) || (experiencia.usuario.id == usuario.id)}">
-                                <div id="${experiencia.id}" class="experiencia" onclick="verExperiencia(${experiencia.id})">
+                                <div class="contenedorExperiencia" onclick="verExperiencia(${experiencia.id})">
+                                    <div id="${experiencia.id}" class="experiencia" >
 
-                                    <section class="tituloExperiencia">
-                                        <section>
-                                            <h3>${experiencia.titulo}
-                                                <c:if test="${experiencia.usuario.id == usuario.id}">
-                                                    <span class="publicoPrivado">${experiencia.publico?"Público":"Privado"}</span>
-                                                </c:if>
-                                            </h3>
-                                            <span> por <a href="Perfil?idPerfilUsuario=${experiencia.usuario.id}">
-                                                    <c:choose>
-                                                        <c:when test="${experiencia.usuario != usuario}">${experiencia.usuario}</c:when>
-                                                        <c:otherwise> ti (${experiencia.usuario}) </c:otherwise>
-                                                    </c:choose> 
-                                                </a>
+                                        <section class="tituloExperiencia">
+                                            <section>
+                                                <h3>${experiencia.titulo}
+                                                    <c:if test="${experiencia.usuario.id == usuario.id}">
+                                                        <span class="publicoPrivado">${experiencia.publico?"Público":"Privado"}</span>
+                                                    </c:if>
+                                                </h3>
+                                                <span> por <a href="Perfil?idPerfilUsuario=${experiencia.usuario.id}">
+                                                        <c:choose>
+                                                            <c:when test="${experiencia.usuario != usuario}">${experiencia.usuario}</c:when>
+                                                            <c:otherwise> ti (${experiencia.usuario}) </c:otherwise>
+                                                        </c:choose> 
+                                                    </a>
 
-                                            </span>
-                                        </section>  
-                                    </section>
-                                    <p>${experiencia.descripcion}</p>
-
+                                                </span>
+                                            </section>  
+                                        </section>
+                                        <p>${experiencia.descripcion}</p>
+                                    </div>
                                 </div>
                             </c:if>
                         </c:forEach>

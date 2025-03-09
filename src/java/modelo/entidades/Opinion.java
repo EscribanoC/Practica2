@@ -3,6 +3,8 @@
  */
 package modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,8 +27,11 @@ public class Opinion implements Serializable {
     @Column(length = 200, nullable = false)
     private String contenido;
     @ManyToOne
+    @JsonIgnore
     private Usuario usuario;
     @ManyToOne
+//    @JsonBackReference(value = "experiencia_opiniones")
+    @JsonIgnore
     private ExperienciaViaje experiencia;
 
     public Long getId() {

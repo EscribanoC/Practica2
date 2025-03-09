@@ -3,6 +3,9 @@
  */
 package modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +41,8 @@ public class Actividad implements Serializable, Comparable<Actividad> {
     private String imagenes;
     @ManyToOne
     @JoinColumn(name = "experiencia_id")
+//    @JsonBackReference(value = "experiencia_actividades")
+    @JsonIgnore
     private ExperienciaViaje experiencia;
     
     public Actividad() {

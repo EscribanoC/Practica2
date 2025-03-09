@@ -55,15 +55,15 @@ public class ControladorCargarGraficaUsuarios extends HttpServlet {
             emf.close();
         }
 
-        // El objeto ObjectMapper puede convertir un Map a JSON
+        //El objeto ObjectMapper puede convertir un Map a JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonResponse = objectMapper.writeValueAsString(usuariosExperiencias);
 
-        // Establecer el tipo de contenido como JSON
+        //Establece el tipo de contenido como JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // Escribir el JSON en la respuesta
+        //Escribe el JSON en la respuesta
         response.getWriter().write(jsonResponse);
     }
 

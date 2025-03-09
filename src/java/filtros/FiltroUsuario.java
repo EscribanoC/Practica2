@@ -40,7 +40,7 @@ public class FiltroUsuario implements Filter {
             HttpSession sesion = req.getSession();
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             
-            if(usuario == null){ //Si no hay usuario registrado
+            if(usuario == null || !usuario.isActivo()){ //Si no hay usuario registrado o no está activo
                 res.sendRedirect(req.getServletContext().getContextPath() + "/ControladorLogin");
                 return;
             }

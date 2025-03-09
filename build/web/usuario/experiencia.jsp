@@ -5,7 +5,9 @@
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<fmt:setLocale value="${pageContext.request.locale}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,6 +73,7 @@
                                     </div>
                                 </c:if>
                             </div>
+                            <p> <fmt:formatDate value="${experiencia.fechaInicio}" dateStyle="short"/></p>
                             <p>${experiencia.descripcion}</p>
                             <c:if test="${experiencia.actividades != []}">
                                 <h3>Actividades</h3>

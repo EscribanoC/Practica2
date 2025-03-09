@@ -35,13 +35,30 @@
                 </div>
             </div>
         </header>
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-            <p class="highcharts-description">
-                Gráfica que muestra los usuarios con el número total de sus experiencias publicadas.
-            </p>
-        </figure>
+        <div class="contenedorGraficas">
 
-        <script src="./js/estadisticas.js"></script>
+            <div class="contenedorGraficas-grafica1">
+                <h2>Número total de experiencias por Usuario</h2>
+                <br>
+                <figure class="highcharts-figure">
+                    <div id="container1"></div>
+                </figure>
+            </div>
+            <div class="contenedorGraficas-grafica2">
+                <h2>Número total de actividades por Experiencia entre dos fechas</h2>
+                <br>
+                <div>
+                    <input type="date" name="fecha1" id="fecha1">
+                    <input type="date" name="fecha2" id="fecha2">
+                    <button onclick="cargarGraficaExperiencias()" class="btnCargarGrafica">Cargar Experiencias</button>
+                </div>
+                <figure class="highcharts-figure">
+                    <div id="container2"></div>
+                </figure>
+            </div>
+        </div>
+
+        <script src="./js/estadisticaUsuarios.js"></script>
+        <script src="./js/estadisticaExperiencias.js"></script>
     </body>
 </html>

@@ -1,6 +1,48 @@
-#container {
-    height: 400px;
+
+
+.contenedorGraficas{
+    margin: 20px 0px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    div{
+        padding: 0px 20px;
+    }
+    
+    .contenedorGraficas-grafica1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        .highcharts-figure{
+            width: 100%;
+        }
+    }
+    
+    .contenedorGraficas-grafica2{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        .highcharts-figure{
+            width: 100%;
+        }
+        
+        .btnCargarGrafica{
+            border: none;
+            background-color: tomato;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    }
 }
+
 
 .highcharts-figure,
 .highcharts-data-table table {
@@ -48,3 +90,4 @@
 .highcharts-description {
     margin: 0.3rem 10px;
 }
+

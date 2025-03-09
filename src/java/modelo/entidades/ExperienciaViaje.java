@@ -3,6 +3,12 @@
  */
 package modelo.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,11 +43,17 @@ public class ExperienciaViaje implements Serializable, Comparable<ExperienciaVia
     private Date fechaInicio;
     @Column(columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean publico;
+    
     @OneToMany(mappedBy = "experiencia")
+    @JsonManagedReference
     private List<Actividad> actividades;
+
     @OneToMany(mappedBy = "experiencia")
+    @JsonManagedReference
     private List<Opinion> opiniones;
+
     @ManyToOne
+    @JsonIgnore
     private Usuario usuario;
     
     public ExperienciaViaje() {
